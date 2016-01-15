@@ -10,6 +10,9 @@
  * @date 8 Jan 2013
  * @author Arwid Bancewicz http://arwid.ca
  * @version 0.3
+ *
+ * @date 15 Jan
+ * @author Alexander Kataev
  */
  (function($) {
     $.fn.scrollIntoView = function(duration, easing, complete) {
@@ -52,9 +55,9 @@
             // it wiggles?
             (pEl.scrollTop != ((pEl.scrollTop += 1) == null || pEl.scrollTop) && (pEl.scrollTop -= 1) != null) ||
             (pEl.scrollTop != ((pEl.scrollTop -= 1) == null || pEl.scrollTop) && (pEl.scrollTop += 1) != null)) {
-                if (elY <= pY) scrollTo(pEl, elY); // scroll up
-                else if ((elY + elH) > (pY + pH)) scrollTo(pEl, elY + elH - pH); // scroll down
-                else scrollTo(pEl, undefined) // no scroll
+                if (elY <= pY) scrollTo(pEl, elY, 1); // scroll up
+                else if ((elY + elH) > (pY + pH)) scrollTo(pEl, elY + elH - pH, -1); // scroll down
+                else scrollTo(pEl, undefined, 0) // no scroll
                 return;
             }
 
@@ -62,7 +65,9 @@
             pEl = pEl.parentNode;
         }
 
-        function scrollTo(el, scrollTo) {
+        function scrollTo(el, scrollTo, direction) {
+            scrollTo -= opts.offset * direction
+
             if (scrollTo === undefined) {
                 if ($.isFunction(opts.complete)) opts.complete.call(el);
             } else if (opts.smooth) {
@@ -76,6 +81,7 @@
     };
 
     $.fn.scrollIntoView.defaults = {
+        offset: 0,
         smooth: true,
         duration: null,
         easing: $.easing && $.easing.easeOutExpo ? 'easeOutExpo': null,

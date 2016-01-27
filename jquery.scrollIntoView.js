@@ -66,14 +66,18 @@
         }
 
         function scrollTo(el, scrollTo, direction) {
-            scrollTo -= opts.offset * direction
+            var scrollValue
+
+            if (scrollTo !== undefined) {
+                scrollValue = scrollTo - opts.offset * direction
+            }
 
             if (scrollTo === undefined) {
                 if ($.isFunction(opts.complete)) opts.complete.call(el);
             } else if (opts.smooth) {
-                $(el).stop().animate({ scrollTop: scrollTo }, opts);
+                $(el).stop().animate({ scrollTop: scrollValue }, opts);
             } else {
-                el.scrollTop = scrollTo;
+                el.scrollTop = scrollValue;
                 if ($.isFunction(opts.complete)) opts.complete.call(el);
             }
         }

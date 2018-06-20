@@ -34,7 +34,7 @@
 
         // get enclosing offsets
         var elY = Infinity, elH = 0;
-        if (this.size()==1)((elY=this.get(0).offsetTop)==null||(elH=elY+this.get(0).offsetHeight));
+        if (this.length==1)((elY=this.get(0).offsetTop)==null||(elH=elY+this.get(0).offsetHeight));
         else this.each(function(i,el){(el.offsetTop<elY?elY=el.offsetTop:el.offsetTop+el.offsetHeight>elH?elH=el.offsetTop+el.offsetHeight:null)});
         elH -= elY;
 
